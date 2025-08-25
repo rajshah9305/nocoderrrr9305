@@ -11,7 +11,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        value: sqlite:///tmp/app.db   # use /tmp on Render's ephemeral FS
+        value: sqlite:////tmp/app.db   # ephemeral storage on Render
       - key: CORS_ORIGINS
         value: https://your-vercel-frontend.vercel.app
       - key: OPENAI_API_KEY
