@@ -1,11 +1,12 @@
-Flask==2.3.3
-Flask-SQLAlchemy==3.0.5
-Flask-SocketIO==5.3.6
-Flask-CORS==4.0.0
-python-socketio==5.9.0
-python-engineio==4.7.1
-requests==2.31.0
-python-dotenv==1.0.0
-openai==1.3.0
-anthropic==0.7.0
-eventlet==0.33.3
+flask==3.0.3
+flask-cors==4.0.1
+flask-sqlalchemy==3.1.1
+python-dotenv==1.0.1
+flask-socketio==5.3.6
+eventlet==0.36.1
+requests==2.32.3
+# Add your model SDKs as needed:
+openai>=1.40.0
+anthropic>=0.34.1
+# If you actually use Cerebras SDK client:
+cerebras_cloud_sdk>=1.7.0
