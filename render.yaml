@@ -1,1 +1,22 @@
-
+services:
+  - type: web
+    name: nocoderrr-backend
+    env: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -k eventlet -w 1 backend.app:app --bind 0.0.0.0:$PORT
+    autoDeploy: true
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///tmp/app.db   # use /tmp on Render's ephemeral FS
+      - key: CORS_ORIGINS
+        value: https://your-vercel-frontend.vercel.app
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CEREBRAS_API_KEY
+        sync: false
