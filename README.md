@@ -1,4 +1,4 @@
-# 🚀 AI App Builder Pro
+# AI App Builder Pro
 
 A fullstack platform that uses AI agents to automatically generate, design, and deploy web applications.
 
@@ -43,49 +43,3 @@ cp .env.example .env
 # Run development
 npm run dev        # Frontend (localhost:5173)
 python backend/app.py  # Backend (localhost:5000)
-```
-
-## 🌐 Deploy to Vercel
-
-1. Push to GitHub
-2. Connect repository to Vercel
-3. Set environment variables in Vercel dashboard
-4. Deploy automatically
-
-### Required Environment Variables
-
-```env
-CEREBRAS_API_KEY=your_cerebras_key
-OPENAI_API_KEY=your_openai_key
-SECRET_KEY=your_secure_secret_key
-```
-
-## 📁 Project Structure
-
-```
-ai-app-builder-pro/
-├── backend/           # Flask API
-│   ├── models/        # Database models
-│   ├── routes/        # API endpoints
-│   ├── services/      # Business logic
-│   └── app.py         # Main application
-├── src/               # React frontend
-│   ├── App.jsx        # Main component
-│   ├── main.jsx       # Entry point
-│   └── index.css      # Styles
-├── public/            # Static assets
-├── package.json       # Dependencies
-├── requirements.txt   # Python packages
-└── vercel.json        # Deployment config
-```
-
-## 🎯 Usage
-
-1. **Describe** your app idea
-2. **Generate** with AI agents
-3. **Preview** in real-time
-4. **Deploy** to production
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
