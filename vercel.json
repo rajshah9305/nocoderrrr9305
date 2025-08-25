@@ -3,14 +3,7 @@
 “builds”: [
 {
 “src”: “backend/app.py”,
-“use”: “@vercel/python”,
-“config”: {
-“maxLambdaSize”: “15mb”
-}
-},
-{
-“src”: “package.json”,
-“use”: “@vercel/node”
+“use”: “@vercel/python”
 }
 ],
 “routes”: [
@@ -19,16 +12,10 @@
 “dest”: “/backend/app.py”
 },
 {
-“src”: “/socket.io/(.*)”,
-“dest”: “/backend/app.py”
-},
-{
 “src”: “/(.*)”,
 “dest”: “/index.html”
 }
 ],
-“outputDirectory”: “dist”,
 “buildCommand”: “npm run build”,
-“devCommand”: “npm run dev”,
-“installCommand”: “npm install && pip install -r requirements.txt”
+“outputDirectory”: “dist”
 }
