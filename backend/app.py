@@ -111,3 +111,14 @@ if __name__ == '__main__':
             app.socketio.run(app, host='127.0.0.1', port=port + 1, debug=True, allow_unsafe_werkzeug=True)
         else:
             raise e
+# At the bottom of your backend/app.py file, add this:
+
+# For Vercel serverless deployment
+
+app = create_app()  # Assuming you have a create_app function
+
+if **name** == ‘**main**’:
+socketio.run(app, debug=True, port=5000)
+else:
+# Export for Vercel
+application = app
