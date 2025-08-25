@@ -1,32 +1,124 @@
 {
   "name": "ai-app-builder-pro",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
+  "description": "AI-powered fullstack application builder with multi-agent system",
+  "keywords": ["ai", "app-builder", "fullstack", "react", "flask", "socketio"],
+  "author": "AI App Builder Pro Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
+    "dev:backend": "cd backend && python app.py",
+    "dev:full": "concurrently \"npm run dev:backend\" \"npm run dev\"",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "build:analyze": "vite build --analyze",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,md}\"",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "clean": "rm -rf dist node_modules/.vite",
+    "prepare": "husky install",
+    "postinstall": "patch-package"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "socket.io-client": "^4.7.2",
-    "axios": "^1.6.0",
-    "tailwindcss": "^3.3.3",
-    "@headlessui/react": "^1.7.17"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "socket.io-client": "^4.8.1",
+    "lucide-react": "^0.294.0",
+    "axios": "^1.7.7",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4",
+    "framer-motion": "^11.11.17",
+    "@headlessui/react": "^2.1.10",
+    "@heroicons/react": "^2.1.5",
+    "react-hot-toast": "^2.4.1",
+    "react-hook-form": "^7.53.2",
+    "@hookform/resolvers": "^3.9.1",
+    "zod": "^3.23.8",
+    "date-fns": "^4.1.0",
+    "lodash-es": "^4.17.21",
+    "use-debounce": "^10.0.4",
+    "react-intersection-observer": "^9.13.1",
+    "react-virtual": "^2.10.4"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.3",
-    "autoprefixer": "^10.4.15",
-    "eslint": "^8.45.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "postcss": "^8.4.27",
-    "vite": "^4.4.5"
-  }
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/lodash-es": "^4.17.12",
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^5.4.19",
+    "vite-plugin-pwa": "^0.20.5",
+    "vite-bundle-analyzer": "^0.11.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "eslint": "^9.15.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "vitest": "^2.1.5",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.5.2",
+    "jsdom": "^25.0.1",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "patch-package": "^8.0.0",
+    "typescript": "^5.7.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run type-check && npm run test"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/ai-app-builder-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/ai-app-builder-pro/issues"
+  },
+  "homepage": "https://ai-app-builder-pro.vercel.app"
 }
