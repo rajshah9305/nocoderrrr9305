@@ -5,6 +5,10 @@ from models import db, Project
 from services.ai_service import AIService
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from the .env file
+load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key')
