@@ -1,30 +1,65 @@
-// src/App.jsx
-import { useEffect, useState } from 'react'
-import { api } from './lib/api'
-import { socket } from './lib/socket'
+import { useState, useEffect } from 'react'
+import { socket } from './services/socket'
+import { api } from './services/api'
+import Header from './components/Header'
+import ProjectForm from './components/ProjectForm'
+import Console from './components/Console'
 
-export default function App() {
-  const [logs, setLogs] = useState<string[]>([])
+function App() {
+  const [logs, setLogs] = useState([])
+  const [isConnected, setIsConnected] = useState(false)
+  const [project, setProject] = useState(null)
 
   useEffect(() => {
-    socket.on('server_message', (m) => setLogs(l => [...l, `server: ${JSON.stringify(m)}`]))
-    socket.on('progress', (m) => setLogs(l => [...l, `progress: ${m.step}`]))
+    function onConnect() {
+      setIsConnected(true)
+    }
+
+    function onDisconnect() {
+      setIsConnected(false)
+    }
+
+    function onServerMessage(message) {
+      setLogs(prev => [...prev, `server: ${JSON.stringify(message)}`])
+    }
+
+    function onProgress(data) {
+      setLogs(prev => [...prev, `progress: ${data.step}`])
+    }
+
+    socket.on('connect', onConnect)
+    socket.on('disconnect', onDisconnect)
+    socket.on('server_message', onServerMessage)
+    socket.on('progress', onProgress)
+
     return () => {
-      socket.off('server_message'); socket.off('progress');
+      socket.off('connect', onConnect)
+      socket.off('disconnect', onDisconnect)
+      socket.off('server_message', onServerMessage)
+      socket.off('progress', onProgress)
     }
   }, [])
 
-  const start = async () => {
-    const { data } = await api.post('/generate', { idea: 'SaaS Starter' })
-    setLogs(l => [...l, `generate: ${JSON.stringify(data)}`])
-    socket.emit('start_generation', { idea: data.projectName })
+  const handleProjectSubmit = async (projectData) => {
+    try {
+      const { data } = await api.post('/api/projects', projectData)
+      setProject(data)
+      setLogs(prev => [...prev, `Project created: ${data.name}`])
+      socket.emit('start_generation', { projectId: data.id })
+    } catch (error) {
+      setLogs(prev => [...prev, `Error: ${error.message}`])
+    }
   }
 
   return (
-    <main className="p-6">
-      <h1 className="text-2xl font-bold">AI App Builder Pro</h1>
-      <button className="mt-4 px-4 py-2 border rounded" onClick={start}>Generate</button>
-      <pre className="mt-6 bg-black/5 p-4 rounded whitespace-pre-wrap">{logs.join('\n')}</pre>
-    </main>
+    <div className="min-h-screen bg-gray-50">
+      <Header isConnected={isConnected} />
+      <main className="container mx-auto px-4 py-8">
+        <ProjectForm onSubmit={handleProjectSubmit} />
+        <Console logs={logs} />
+      </main>
+    </div>
   )
 }
+
+export default App
